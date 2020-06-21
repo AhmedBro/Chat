@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F6F8">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/btn_shape2"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/logout"
+                            android:layout_width="325dp"
+                            android:layout_height="59dp">
+
+                            <ImageView
+                                android:id="@+id/mperonIcon"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/person_icon" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/mperonIcon"
+                                android:background="#fff"
+
+                                app:boxStrokeColor="#fff"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/musermail"
+                                    style="@style/AppTheme.NoActionBar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="User Name / Email"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:textSize="12dp"
+
+                                    />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="325dp"
+                            android:layout_height="59dp">
+
+                            <ImageView
+                                android:id="@+id/mlockIcon"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/lock_icon" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/mlockIcon"
+                                android:background="#fff"
+                                app:boxStrokeColor="#fff"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/mPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Password"
+                                    android:inputType="textPassword"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textColorHint="@color/colorPrimaryDark"
+                                    android:textSize="12dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/mLogInRelative"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/add_money_shap"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/mlogTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="10dp"
+                        android:text="Log In"
+                        android:textColor="#fff"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/back_for_number">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/arrow_icon" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Don’t have an account? Click On SignUp "
+                    android:textColor="@color/mainTxtsColor"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/SingIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="To create a new account."
+                    android:textColor="@color/mainTxtsColor"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/pop_up_shap"
+                android:padding="15dp"
+                android:theme="@style/AppCompatAlertDialogStyle"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
