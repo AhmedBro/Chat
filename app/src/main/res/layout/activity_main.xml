@@ -34,4 +34,15 @@
         android:id="@+id/RecUser"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mToolBar"
+        app:layout_constraintVertical_bias="0.943"
+        android:id="@+id/Contacts"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,19 @@
 package com.example.chatapp.Activities;
 
+import android.Manifest;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
-import com.example.chatapp.Adapters.UserAdapter;
-import com.example.chatapp.Models.UsersModel;
+import com.example.chatapp.Adapters.Chats;
+import com.example.chatapp.Models.Contact;
 import com.example.chatapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,21 +22,32 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     DatabaseReference mDatabaseReference;
-    UserAdapter mUserAdapter;
-    ArrayList<UsersModel> mUsers;
-
+    Chats mUserAdapter;
+    ArrayList<Contact> mUsers;
+    FirebaseAuth mFirebaseAuth;
+    FloatingActionButton mFloatingActionButton;
+    @BindView(R.id.Contacts)
+    FloatingActionButton Contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users Data");
+        ButterKnife.bind(this);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid()).child("Chats");
         mUsers = new ArrayList<>();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        TakePermission();
         instViews();
     }
+
     public void onStart() {
         super.onStart();
         LoadUsers();
@@ -41,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private void instViews() {
         mRecyclerView = findViewById(R.id.RecUser);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this , RecyclerView.VERTICAL , false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
     }
@@ -53,12 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 mUsers.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                    UsersModel imageUploadInfo = postSnapshot.getValue(UsersModel.class);
+                    Contact imageUploadInfo = postSnapshot.getValue(Contact.class);
+                    if (imageUploadInfo.getmId().equalsIgnoreCase(mFirebaseAuth.getUid())) {
+                        continue;
+                    } else {
+                        mUsers.add(imageUploadInfo);
 
-                    mUsers.add(imageUploadInfo);
+                    }
+
                 }
 
-                 mUserAdapter = new UserAdapter(MainActivity.this,mUsers);
+                mUserAdapter = new Chats(MainActivity.this, mUsers);
 
                 mRecyclerView.setAdapter(mUserAdapter);
 
@@ -73,5 +93,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.Contacts)
+    public void onViewClicked() {
+        Intent mIntent = new Intent(this , ContactsActivity.class);
+        startActivity(mIntent);
+    }
+    private void TakePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        }
     }
 }

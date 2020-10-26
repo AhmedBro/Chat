@@ -1,7 +1,7 @@
 package com.example.chatapp.Models;
 
 public class ModelChat {
-    String mMessage , mSender, mReceiver,mTime;
+    String mMessage , mSender, mReceiver,mTime , mLastMessage;
     Boolean mIsSeen;
 
     public ModelChat(String mMessage, String mSender, String mReceiver, String mTime, Boolean mIsSeen) {
@@ -13,6 +13,10 @@ public class ModelChat {
     }
 
     public ModelChat() {
+    }
+
+    public String getmLastMessage() {
+        return mLastMessage;
     }
 
     public String getmMessage() {

@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="verify_your_phone_number">Verify Your Phone Number</string>
+    <string name="WelcomeMessaage">We Will Send An SMS Message To Verify Your \n Phone Number. Choose Your Country \n and EnterYour Phone</string>
+    <string name="your_phone">Your Phone</string>
+    <string name="next">Next</string>
 </resources>

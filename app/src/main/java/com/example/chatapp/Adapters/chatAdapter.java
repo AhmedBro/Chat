@@ -1,9 +1,15 @@
 package com.example.chatapp.Adapters;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.chatapp.Activities.ChatActivity;
 import com.example.chatapp.Models.ModelChat;
 import com.example.chatapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -127,12 +135,12 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     //for Remove value
-//                    ds.getRef().removeValue();
+                    ds.getRef().removeValue();
 
                     // tell to user this message Deleted
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("mMessage", "Deleted");
-                    ds.getRef().updateChildren(map);
+//                    HashMap<String, Object> map = new HashMap<>();
+//                    map.put("mMessage", "Deleted");
+//                    ds.getRef().updateChildren(map);
 
                 }
             }
@@ -177,5 +185,30 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
             mIsSeen = itemView.findViewById(R.id.mSeen);
             mLinearLayout = itemView.findViewById(R.id.mMessageLayout);
         }
+    }
+
+
+    public void showNotification(Context context, String title, String message, Intent intent, int reqCode) {
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, reqCode, intent, PendingIntent.FLAG_ONE_SHOT);
+        String CHANNEL_ID = "channel_name";// The id of the channel.
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel Name";// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        notificationManager.notify(reqCode, notificationBuilder.build()); // 0 is the request code, it should be unique id
+
+
     }
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.Verfication">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="Verify"
+                android:textColor="@color/colorPrimary"
+
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/mPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="+11111111"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text1"
+            android:layout_margin="15sp"
+            android:gravity="center"
+
+            android:text="We are working to verify your Number automatically detect SMS to \n your Number"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+
+        <com.alimuzaffar.lib.pin.PinEntryEditText
+            android:id="@+id/mCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text2"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:cursorVisible="true"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textIsSelectable="false"
+            android:textSize="20sp"
+            app:pinLineStroke="5dp"
+            app:pinLineStrokeSelected="10dp"
+            android:layout_margin="20dp"
+
+            />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
