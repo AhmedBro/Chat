@@ -69,12 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                     Contact imageUploadInfo = postSnapshot.getValue(Contact.class);
-                    if (imageUploadInfo.getmId().equalsIgnoreCase(mFirebaseAuth.getUid())) {
-                        continue;
-                    } else {
+
                         mUsers.add(imageUploadInfo);
 
-                    }
+
 
                 }
 

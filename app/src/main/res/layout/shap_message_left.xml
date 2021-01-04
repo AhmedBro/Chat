@@ -1,51 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mMessageLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:id="@+id/mMessageLayout"
-    >
+    android:padding="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-<de.hdodenhof.circleimageview.CircleImageView
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:id="@+id/mUserImage"
-    android:background="@null"
-    android:src="@drawable/left_right_face"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mMessage"
-        android:textColor="@color/black"
-        android:padding="15dp"
-        android:textSize="16sp"
-        android:layout_weight="1"
-        android:text="His Message"
-        android:background="@drawable/left_shap"
-        android:layout_marginRight="10dp"
-        />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/mUserImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:src="@drawable/left_right_face" />
 
         <TextView
+            android:id="@+id/mMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/left_shap"
+            android:padding="15dp"
+            android:text="His Message"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/mTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="02/3/2020  05:59pm"
             android:textColor="@color/black"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
     </LinearLayout>
+
     <TextView
+        android:id="@+id/mSeen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mSeen"
         android:gravity="end"
-        android:visibility="gone"
+        android:text="delivered"
         android:textAlignment="textEnd"
-        android:text="delivered"/>
+        android:visibility="gone" />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="6dp"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:sliderAnimationDuration="600"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="true" />
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.chatapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.chatapp.Activities.ChatActivity;
 import com.example.chatapp.Models.Contact;
 import com.example.chatapp.R;
 
@@ -40,10 +42,24 @@ public class Chats extends RecyclerView.Adapter<Chats.adapter> {
         holder.mName.setText(mUsersModels.get(position).getmName());
         holder.mMail.setText(mUsersModels.get(position).getmLastMessage());
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        Log.e("Time" , mUsersModels.get(position).getmTime());
-        cal.setTimeInMillis(Long.parseLong(mUsersModels.get(position).getmTime()));
-        String Date = DateFormat.format(" hh:mm aa", cal).toString();
-        holder.mTime.setText(Date);
+        try {
+            cal.setTimeInMillis(Long.parseLong(mUsersModels.get(position).getmTime()));
+            String Date = DateFormat.format(" hh:mm aa", cal).toString();
+            holder.mTime.setText(Date);
+
+        } catch (Exception e) {
+
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent = new Intent(mContext, ChatActivity.class);
+                mIntent.putExtra("Id", mUsersModels.get(position).getmId());
+                mIntent.putExtra("Name", mUsersModels.get(position).getmName());
+
+                mContext.startActivity(mIntent);
+            }
+        });
 
     }
 

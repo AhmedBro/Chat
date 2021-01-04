@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatapp.Activities.ChatActivity;
@@ -46,10 +48,12 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
     Context mContext;
     ArrayList<ModelChat> mChat;
     FirebaseUser mFirebaseUser;
+    RecyclerView.LayoutManager manager;
 
     public chatAdapter(Context mContext, ArrayList<ModelChat> mChat) {
         this.mContext = mContext;
         this.mChat = mChat;
+        manager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
     }
 
     @NonNull
@@ -83,6 +87,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
 
         //Is Seen
         if (position == mChat.size() - 1) {
+            Log.e("Seen", mChat.get(position).getmIsSeen() + "");
             if (mChat.get(position).getmIsSeen()) {
                 holder.mIsSeen.setText("Seen");
             } else {
@@ -127,7 +132,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
 
     private void DeleteMessage(int position) {
         String aTime = mChat.get(position).getmTime();
-        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Chat");
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Chats");
 
         Query mQuery = mDatabaseReference.orderByChild("mTime").equalTo(aTime);
         mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -176,6 +181,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
     public class adapter extends RecyclerView.ViewHolder {
         TextView mMessage, mTime, mIsSeen;
         LinearLayout mLinearLayout;
+        RecyclerView mImages;
 
         public adapter(@NonNull View itemView) {
             super(itemView);
@@ -184,6 +190,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.adapter> {
             mTime = itemView.findViewById(R.id.mTime);
             mIsSeen = itemView.findViewById(R.id.mSeen);
             mLinearLayout = itemView.findViewById(R.id.mMessageLayout);
+            mImages = itemView.findViewById(R.id.imageSlider);
         }
     }
 

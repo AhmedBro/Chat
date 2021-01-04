@@ -35,8 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contact> {
     ArrayList<com.example.chatapp.Models.Contact> mItems;
     Context mContext;
-    static boolean ChatExist = false;
-    static com.example.chatapp.Models.Contact mMyInfo;
+
 
     public ContactsAdapter(ArrayList<com.example.chatapp.Models.Contact> mItems, Context mContext) {
         this.mItems = mItems;
@@ -62,56 +61,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
                 Intent mIntent = new Intent(mContext, ChatActivity.class);
                 mIntent.putExtra("Id", mItems.get(position).getmId());
                 mIntent.putExtra("Name", mItems.get(position).getmName());
-
-
-                DatabaseReference UserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Chats");
-                Query query = UserDb.orderByChild("mId").equalTo(mItems.get(position).getmId());
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            ChatExist = true;
-                            Log.e("Exist", "FFFFFFFFFFFFFFFFFFF");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                if (!ChatExist) {
-
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                mMyInfo = snapshot.getValue(com.example.chatapp.Models.Contact.class);
-
-                                HashMap map = new HashMap();
-                                map.put("mImage", mMyInfo.getmImage());
-                                map.put("mPhone", mMyInfo.getmPhone());
-                                map.put("mId", mMyInfo.getmId());
-
-                                HashMap map2 = new HashMap();
-                                map2.put("mImage", mItems.get(position).getmImage());
-                                map2.put("mPhone", mItems.get(position).getmPhone());
-                                map2.put("mId", mItems.get(position).getmId());
-                                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Chats").child(mItems.get(position).getmId()).updateChildren(map2);
-                                FirebaseDatabase.getInstance().getReference().child("Users").child(mItems.get(position).getmId()).child("Chats").child(FirebaseAuth.getInstance().getUid()).updateChildren(map);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-                }
-
+                mIntent.putExtra("Phone", mItems.get(position).getmPhone());
+                mIntent.putExtra("Image", mItems.get(position).getmImage());
 
                 mContext.startActivity(mIntent);
             }

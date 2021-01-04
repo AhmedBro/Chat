@@ -19,6 +19,7 @@ import com.example.chatapp.Coverting.Iso2Phone;
 import com.example.chatapp.Models.Contact;
 import com.example.chatapp.R;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,7 @@ public class ContactsActivity extends AppCompatActivity {
     @BindView(R.id.allContacts)
     RecyclerView mAllContacts;
     ArrayList<Contact> mContacts;
-   static ArrayList<Contact> mAppContact;
+    static ArrayList<Contact> mAppContact;
     ContactsAdapter mContactsAdapter;
     public Contact mContact;
     private ProgressDialog progressDialog;
@@ -50,7 +51,7 @@ public class ContactsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContacts = new ArrayList<>();
         mAppContact = new ArrayList<>();
-        progressDialog = new ProgressDialog( ContactsActivity.this);
+        progressDialog = new ProgressDialog(ContactsActivity.this);
         dialogTitle = "Loading...";
         dialogMessage = "Please wait...";
         progressDialog.setTitle(dialogTitle);
@@ -63,7 +64,7 @@ public class ContactsActivity extends AppCompatActivity {
             public void run() {
                 LoadallContacts();
             }
-        },50);
+        }, 50);
     }
 
     private void LoadallContacts() {
@@ -89,9 +90,9 @@ public class ContactsActivity extends AppCompatActivity {
 
             String Image = cur.getString(cur.getColumnIndex(
                     ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
-            mContact = new Contact(phoneNo,"", name, Image);
+            mContact = new Contact(phoneNo, "", name, Image);
             mContacts.add(mContact);
-            Log.e("Name  , number" , name + " , " + phoneNo);
+            Log.e("Name  , number", name + " , " + phoneNo);
             getUserApp(mContact);
         }
 
@@ -112,14 +113,15 @@ public class ContactsActivity extends AppCompatActivity {
                         Phone = dataSnapshot.child("mPhone").getValue().toString();
                         dataSnapshot.child("mName").getValue().toString();
                         Name = Contact.getmName();
-                        if (!dataSnapshot.child("mImage").getValue().toString().equals("")){
+                        if (!dataSnapshot.child("mImage").getValue().toString().equals("")) {
                             mContact = new Contact(Phone, dataSnapshot.getKey(), Name, dataSnapshot.child("mImage").getValue().toString());
 
+                        } else {
+                            mContact = new Contact(Phone, dataSnapshot.getKey(), Name, "");
                         }
-                        else {
-                            mContact = new Contact(Phone,dataSnapshot.getKey(), Name, "");
+                        if (dataSnapshot.child("mPhone").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())){
+                            continue;
                         }
-
 
                         mAppContact.add(mContact);
                         mContactsAdapter.notifyDataSetChanged();
